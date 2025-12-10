@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tlias智能学习辅助系统</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .container { 
+
+       
+    width: 80%;
+    margin: 0 auto;/* 水平居中 */
+}
+      
+      /* 顶栏样式 */
+      .header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: #b5b5b5;
+          padding: 10px 20px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+      
+      /* 加大加粗标题 */
+      .header h1 {
+          margin: 0;
+          font-size: 24px;
+          font-weight: bold;
+          color: #ffffff;
+      }
+
+      /* 文本链接样式 */
+      .header a {
+          text-decoration: none;
+          color: #333;
+          font-size: 16px;
+      }
+
+
+
+      /* 搜索表单样式（可以放到 head 中的 style，或页面现有 style 区） */
+.search-area {
+  padding: 18px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+ 
+}
+
+/* 字段容器：垂直排列标签与输入，但整体在一行 */
+.field {
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+}
+
+/* 标签样式 */
+.label-text {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+/* 输入与选择样式 */
+.search-form input[type="text"],
+.search-form select {
+  height: 36px;
+  padding: 6px 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 14px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+/* 按钮组 */
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-left: 8px;
+}
+
+.actions button {
+  height: 36px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* 查询按钮主色 */
+#btnSearch {
+  background-color: #007acc;
+  color: #fff;
+}
+
+/* 清空按钮次色 */
+#btnReset {
+  background-color: #f3f3f3;
+  color: #333;
+  border: 1px solid #e1e1e1;
+}
+
+/* 响应式：窄屏时允许换行保持可用 */
+@media (max-width: 780px) {
+  .search-form {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .field {
+    min-width: 45%;
+  }
+  .actions {
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 6px;
+  }
+}
+
+
+/* 表格风格（放到页面现有 style 区或 head） */
+.staff-table th, .staff-table td {
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #444;
+}
+.staff-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+.staff-table tbody tr:hover {
+  background: #fafafa;
+}
+.avatar {
+  width:36px;
+  height:36px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  color:#fff;
+  font-weight:600;
+  font-size:13px;
+}
+.btn {
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:4px;
+  font-size:13px;
+  cursor:pointer;
+  border:none;
+}
+.btn-edit {
+  background:#fff;
+  color:#007acc;
+  border:1px solid #cde6fb;
+  margin-right:8px;
+}
+.btn-delete {
+  background:#ff4d4f;
+  color:#fff;
+}
+@media (max-width:880px){
+  .staff-table thead { display:none; }
+  .staff-table tr { margin-bottom:12px; border-bottom:1px solid #eee; }
+  .staff-table td { text-align:left; padding:8px 6px; }
+  .staff-table td::before { font-weight:600; width:120px; display:inline-block; color:#666; }
+  .staff-table td:nth-of-type(1)::before { content: "姓名"; }
+  .staff-table td:nth-of-type(2)::before { content: "性别"; }
+  .staff-table td:nth-of-type(3)::before { content: "头像"; }
+  .staff-table td:nth-of-type(4)::before { content: "职位"; }
+  .staff-table td:nth-of-type(5)::before { content: "入职日期"; }
+  .staff-table td:nth-of-type(6)::before { content: "最后操作时间"; }
+  .staff-table td:nth-of-type(7)::before { content: "操作"; }
+}
+
+
+
+/* 页脚样式（可合并到页面上部的 style 区） */
+.site-footer {
+  background: #b5b5b5; /* 灰色背景 */
+  color: #ffffff;      /* 白色字体 */
+  text-align: center;
+  padding: 18px 12px;
+  margin-top: 20px;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+.site-footer .footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.site-footer .company {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.site-footer .copyright {
+  font-size: 13px;
+  opacity: 0.95;
+}
+@media (max-width:600px){
+  .site-footer .company { font-size: 15px; }
+  .site-footer .copyright { font-size: 12px; }
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container"> 
+    
+    <!-- 顶栏 -->
+    <div class="header">
+        <h1>Tlias智能学习辅助系统</h1>
+        <a href="#">退出登录</a>
+    </div>
+
+   <!-- 再继续帮我生成第二个部分: 2. 搜索表单区域
+组成：包括三个输入控件和两个操作按钮。输入控件具体为：姓名（文本输入框）、性别（下拉选择，选项包括 男/女， 默认为空）、职位（下拉选择，选项包括班主任、讲师、学工主管、教研主管、咨询师， 默认为空）。
+按钮：“查询”与“清空”按钮，用于提交表单或重置表单项 。
+布局：所有表单项及按钮需水平排列于一行 ，确保美观大气 。 -->
+
+<!-- 搜索表单区域 -->
+<section class="search-area">
+  <form id="searchForm" class="search-form">
+    
+      <label class="label-text">姓名</label>
+      <input type="text" name="name" placeholder="请输入姓名">
+   
+      <label class="label-text">性别</label>
+      <select name="gender">
+        <option value="">-- 请选择 --</option>
+        <option value="1">男</option>
+        <option value="2">女</option>
+      </select>
+   
+
+    
+      <label class="label-text">职位</label>
+      <select name="position">
+        <option value="">-- 请选择 --</option>
+        <option value="1">班主任</option>
+        <option value="2">讲师</option>
+        <option value="3">学工主管</option>
+        <option value="4">教研主管</option>
+        <option value="5">咨询师</option>
+      </select>
+    
+
+    
+      <button type="submit" id="btnSearch">查询</button>
+      <button type="button" id="btnReset">清空</button>
+    
+  </form>
+</section>
+
+<!-- 再继续帮我生成第三个部分: 3. 表格展示区
+表格结构：展示列包括姓名、性别（显示男/女）、头像（小图标展示）、职位（显示班主任/讲师/学工主管/教研主管/咨询师）、入职日期、最后操作时间、操作（里包含两个按钮 编辑 与 删除）。
+数据模拟：基于《笑傲江湖》小说人物生成4条虚拟数据，每条数据应包含上述所有列的信息，以体现实际应用场景 。
+样式：可适当调整表格样式，确保美观大气。 -->
+<section class="table-area" style="padding:18px 20px;">
+  <div class="table-card">
+    
+    <table id="staffTable" class="staff-table" style="width:100%;border-collapse:collapse;background:#fff;">
+      <thead>
+        <tr>
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid #e6e6e6;">姓名</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid #e6e6e6;">性别</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid #e6e6e6;">头像</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid #e6e6e6;">职位</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid #e6e6e6;">入职日期</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid #e6e6e6;">最后操作时间</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid #e6e6e6;">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 由脚本渲染 -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- 再继续帮我生成第二个部分: 4. 页脚版权区域
+内容：第一行显示公司全称“江苏传智播客教育科技股份有限公司”；第二行展示版权信息，“版权所有 Copyright 2006-2024 All Rights Reserved”。
+设计：该区域应具有灰色背景，字体颜色为白色，居中对齐，以营造专业且统一的视觉效果 。 -->
+
+<!-- 页脚版权区域 -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="company">江苏传智播客教育科技股份有限公司</div>
+    <div class="copyright">版权所有 Copyright 2006-2024 All Rights Reserved</div>
+  </div>
+</footer>
+</div>
+</body>
+<script>
+/* 表格数据与渲染逻辑 */
+(function(){
+  const data = [
+    {
+      id: 1,
+      name: "令狐冲",
+      gender: "男",
+      position: "讲师",
+      hireDate: "2018-05-12",
+      lastOp: "2025-12-01 09:23",
+      avatarColor: "#2EA7E0"
+    },
+    {
+      id: 2,
+      name: "任我行",
+      gender: "男",
+      position: "学工主管",
+      hireDate: "2016-03-08",
+      lastOp: "2025-11-28 16:45",
+      avatarColor: "#F39C12"
+    },
+    {
+      id: 3,
+      name: "任盈盈",
+      gender: "女",
+      position: "咨询师",
+      hireDate: "2019-09-18",
+      lastOp: "2025-12-02 14:05",
+      avatarColor: "#E66A9B"
+    },
+    {
+      id: 4,
+      name: "岳不群",
+      gender: "男",
+      position: "教研主管",
+      hireDate: "2015-11-03",
+      lastOp: "2025-11-30 11:10",
+      avatarColor: "#6BBF59"
+    },
+      {
+      id: 5,
+      name: "岳不群",
+      gender: "男",
+      position: "教研主管",
+      hireDate: "2015-11-03",
+      lastOp: "2025-11-30 11:10",
+      avatarColor: "#6BBF59"
+    },
+      {
+      id: 6,
+      name: "岳不群",
+      gender: "男",
+      position: "教研主管",
+      hireDate: "2015-11-03",
+      lastOp: "2025-11-30 11:10",
+      avatarColor: "#6BBF59"
+    },
+      {
+      id: 7,
+      name: "岳不群",
+      gender: "男",
+      position: "教研主管",
+      hireDate: "2015-11-03",
+      lastOp: "2025-11-30 11:10",
+      avatarColor: "#6BBF59"
+    },
+      {
+      id: 8,
+      name: "岳不群",
+      gender: "男",
+      position: "教研主管",
+      hireDate: "2015-11-03",
+      lastOp: "2025-11-30 11:10",
+      avatarColor: "#6BBF59"
+    }
+  ];
+
+  const tbody = document.querySelector('#staffTable tbody');
+
+  function initials(name){
+    // 取中文名的第一个字作为头像文本（若为复名也可取两个字）
+    return name.slice(0,2);
+  }
+
+  function render(){
+    tbody.innerHTML = '';
+    data.forEach(item => {
+      const tr = document.createElement('tr');
+
+      tr.innerHTML = `
+        <td>${escapeHtml(item.name)}</td>
+        <td>${escapeHtml(item.gender)}</td>
+        <td><span class="avatar" style="background:${item.avatarColor}">${escapeHtml(initials(item.name))}</span></td>
+        <td>${escapeHtml(item.position)}</td>
+        <td>${escapeHtml(item.hireDate)}</td>
+        <td>${escapeHtml(item.lastOp)}</td>
+        <td>
+          <button class="btn btn-edit" data-id="${item.id}">编辑</button>
+          <button class="btn btn-delete" data-id="${item.id}">删除</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+    // 绑定事件（代理也可以）
+    tbody.querySelectorAll('.btn-edit').forEach(btn=>{
+      btn.addEventListener('click', function(){
+        const id = this.getAttribute('data-id');
+        const row = data.find(d=>String(d.id)===String(id));
+        if(row) {
+          alert('编辑：' + row.name + '\\n（此处可打开编辑面板）');
+          console.log('编辑', row);
+        }
+      });
+    });
+    tbody.querySelectorAll('.btn-delete').forEach(btn=>{
+      btn.addEventListener('click', function(){
+        const id = this.getAttribute('data-id');
+        const row = data.find(d=>String(d.id)===String(id));
+        if(!row) return;
+        if(confirm('确定删除 ' + row.name + ' 吗？')){
+          const idx = data.findIndex(d=>String(d.id)===String(id));
+          if(idx!==-1){
+            data.splice(idx,1);
+            render();
+          }
+        }
+      });
+    });
+  }
+
+  function escapeHtml(text){
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  render();
+})();
+</script>
+</html>
